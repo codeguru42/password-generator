@@ -1,6 +1,10 @@
+from faker import Faker
+
+
 def generate_passwords(n):
+    fake = Faker()
     for i in range(n):
-        yield 'username', 'password'
+        yield '.'.join(fake.name().split()), fake.password(25)
 
 
 def main():
