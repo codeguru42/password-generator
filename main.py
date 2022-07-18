@@ -1,3 +1,6 @@
+import sys
+
+import requests
 from faker import Faker
 
 
@@ -8,8 +11,15 @@ def generate_passwords(n):
 
 
 def main():
-    for username, password in generate_passwords(10):
-        print(username, password)
+    url = sys.argv[1]
+    n = int(sys.argv[2])
+    for username, password in generate_passwords(n):
+        data = {
+            'username': username,
+            'passwordx': password
+        }
+        response = requests.post(url, data=data)
+        print(username, password, response.status_code)
 
 
 if __name__ == '__main__':
