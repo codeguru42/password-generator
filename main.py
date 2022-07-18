@@ -13,13 +13,22 @@ def generate_passwords(n):
 def main():
     url = sys.argv[1]
     n = int(sys.argv[2])
+    username_key = sys.argv[3]
+    password_key = sys.argv[4]
+    i = 0
     for username, password in generate_passwords(n):
         data = {
-            'username': username,
-            'passwordx': password
+            username_key: username,
+            password_key: password
         }
         response = requests.post(url, data=data)
-        print(username, password, response.status_code)
+
+        if response.status_code != 200:
+            print(f'Failed: {username} {password} {response.status_code}')
+
+        if i % 1000 == 0:
+            print(f'{i}/{n} passwords sent')
+        i += 1
 
 
 if __name__ == '__main__':
